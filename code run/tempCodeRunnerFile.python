@@ -1,0 +1,32 @@
+from PIL import Image
+
+def text_to_binary(massage):
+    binary =""
+    for char in massage:
+        binary += format(ord(char), '08b')
+        return binary
+        
+def encode_massage(input_image, massage, output_image):
+    img = Image.open(input.png)
+    pixels = img.load()
+    binary_massage = text_to_binary(massage)
+    binary_massage += '1111111111111110'
+    index = 0
+    width, height = img.size
+    for y in range(height):
+        for x in range(width):
+            if index < len(binary_massage):
+                r, g, b, a = pixels[x, y]
+                r = (r & ~1) | int(binary_massage[index])
+                pixels[x, y] = (r, g, b, a)
+                index +=1
+            else:
+                img.save(output_image)
+                return
+            
+        
+input_image= "input.png"
+output_image= "encoded.png"
+massage = input("enter secret text massage: ")
+encode_massage(input_image, massage, output_image)
+print("end of program....")
